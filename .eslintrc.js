@@ -20,6 +20,11 @@ module.exports = {
   'plugins': [
     'react', 'jest', 'cypress'
   ],
+  'settings': {
+    'react': {
+      'version': 'detect'
+    }
+  },
   'rules': {
     'indent': [
       'error',
