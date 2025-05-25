@@ -3,6 +3,8 @@
 echo "Build script"
 
 # add the commands here
-npm rm -g webpack-cli
-npm i -D webpack-cli
-yes Y | npm run build
+echo "Making sure webpack-cli is installed..."
+npm remove --global webpack-cli
+npm install --save-dev webpack-cli
+echo "Making build..."
+npm run build
