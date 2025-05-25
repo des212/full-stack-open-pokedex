@@ -3,5 +3,6 @@
 echo "Build script"
 
 # add the commands here
-npm i -g webpack-cli
+npm rm -g webpack-cli
+npm i -D webpack-cli
 yes Y | npm run build
