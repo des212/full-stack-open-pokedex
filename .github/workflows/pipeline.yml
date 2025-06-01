@@ -38,6 +38,7 @@ jobs:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v2
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.73.0
         env:
