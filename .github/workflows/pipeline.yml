@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-env:
+
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-22.04
