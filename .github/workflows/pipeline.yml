@@ -33,6 +33,28 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      - name: Deployment success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          if: ${{ github.event_name != 'schedule' }}
+            details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by ${{ github.actor }}
+          if: ${{ github.event_name == 'schedule' }}
+            details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by cron
+          text: A new version of Pokedex deployed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Deployment failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          if: ${{ github.event_name != 'schedule' }}
+            details: commit ${{ github.event.head_commit.url }} by ${{ github.actor }} broke the build :(
+          if: ${{ github.event_name == 'schedule' }}
+            details: commit ${{ github.event.head_commit.url }} by cron broke the build :(
+          text: Build failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
     needs: [simple_deployment_pipeline]
