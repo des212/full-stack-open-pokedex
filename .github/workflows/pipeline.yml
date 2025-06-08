@@ -39,7 +39,7 @@ jobs:
         with:
           severity: info
           details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by ${{ github.actor }}
-          text: A new version of Pokedex deployed
+          description: A new version of Pokedex deployed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment success cron
         uses: rjstone/discord-webhook-notify@v1.0.0
@@ -47,7 +47,7 @@ jobs:
         with:
           severity: info
           details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by cron
-          text: A new version of Pokedex deployed
+          description: A new version of Pokedex deployed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure actor
         uses: rjstone/discord-webhook-notify@v1.0.0
@@ -55,7 +55,7 @@ jobs:
         with:
           severity: error
           details: commit ${{ github.event.head_commit.url }} by ${{ github.actor }} broke the build :(
-          text: Build failed
+          description: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure cron
         uses: rjstone/discord-webhook-notify@v1.0.0
@@ -63,7 +63,7 @@ jobs:
         with:
           severity: error          
           details: commit ${{ github.event.head_commit.url }} by cron broke the build :(
-          text: Build failed
+          description: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
