@@ -34,37 +34,33 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       - name: Deployment success actor
-        uses: rjstone/discord-webhook-notify@v1.0.0
+        uses: sarisia/actions-status-discord@v1
         if: success() && ${{ github.event_name != 'schedule' }}
         with:
-          severity: info
-          details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by ${{ github.actor }}
-          description: A new version of Pokedex deployed
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          description: to https://full-stack-open-pokedex-3dxz.onrender.com/ by ${{ github.actor }}
+          content: A new version of Pokedex deployed
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment success cron
-        uses: rjstone/discord-webhook-notify@v1.0.0
+        uses: sarisia/actions-status-discord@v1
         if: success() && ${{ github.event_name == 'schedule' }}
         with:
-          severity: info
-          details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by cron
-          description: A new version of Pokedex deployed
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          description: to https://full-stack-open-pokedex-3dxz.onrender.com/ by cron
+          content: A new version of Pokedex deployed
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure actor
-        uses: rjstone/discord-webhook-notify@v1.0.0
+        uses: sarisia/actions-status-discord@v1
         if: failure() && ${{ github.event_name != 'schedule' }}
         with:
-          severity: error
-          details: commit ${{ github.event.head_commit.url }} by ${{ github.actor }} broke the build :(
-          description: Build failed
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          description: commit ${{ github.event.head_commit.url }} by ${{ github.actor }} broke the build :(
+          content: Build failed
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure cron
-        uses: rjstone/discord-webhook-notify@v1.0.0
+        uses: sarisia/actions-status-discord@v1
         if: failure() && ${{ github.event_name == 'schedule' }}
-        with:
-          severity: error          
-          details: commit ${{ github.event.head_commit.url }} by cron broke the build :(
-          description: Build failed
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        with:       
+          description: commit ${{ github.event.head_commit.url }} by cron broke the build :(
+          content: Build failed
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
     needs: [simple_deployment_pipeline]
