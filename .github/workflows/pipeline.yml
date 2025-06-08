@@ -49,7 +49,6 @@ jobs:
           details: to https://full-stack-open-pokedex-3dxz.onrender.com/ by cron
           text: A new version of Pokedex deployed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
       - name: Deployment failure actor
         uses: rjstone/discord-webhook-notify@v1
         if: failure() && ${{ github.event_name != 'schedule' }}
