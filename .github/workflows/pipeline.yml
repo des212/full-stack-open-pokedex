@@ -34,7 +34,7 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       - name: Deployment success actor
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: success() && ${{ github.event_name != 'schedule' }}
         with:
           severity: info
@@ -42,7 +42,7 @@ jobs:
           text: A new version of Pokedex deployed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment success cron
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: success() && ${{ github.event_name == 'schedule' }}
         with:
           severity: info
@@ -50,7 +50,7 @@ jobs:
           text: A new version of Pokedex deployed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure actor
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure() && ${{ github.event_name != 'schedule' }}
         with:
           severity: error
@@ -58,7 +58,7 @@ jobs:
           text: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deployment failure cron
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure() && ${{ github.event_name == 'schedule' }}
         with:
           severity: error          
