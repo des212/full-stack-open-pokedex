@@ -14,7 +14,7 @@ jobs:
     - name: Check the deployed service URL
       uses: jtalk/url-health-check-action@v4
       with:
-        url: https://full-stack-open-pokedex-3dxz.onrender.com/
+        url: https://full-stack-open-pokedex-3dxzs.onrender.com/
         max-attempts: 4
         retry-delay: 5s
     - name: Deployment success actor
@@ -22,7 +22,7 @@ jobs:
       if: ${{ success() && github.event_name != 'schedule' }}
       with:
         status: Success
-        description: URL https://full-stack-open-pokedex-3dxz.onrender.com/ checked by ${{ github.actor }}
+        description: URL https://full-stack-open-pokedex-3dxzs.onrender.com/ checked by ${{ github.actor }}
         content: Periodic health check passed
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
     - name: Deployment success cron
@@ -30,7 +30,7 @@ jobs:
       if: ${{ success() && github.event_name == 'schedule' }}
       with:
         status: Success
-        description: URL https://full-stack-open-pokedex-3dxz.onrender.com/ checked by cron
+        description: URL https://full-stack-open-pokedex-3dxzs.onrender.com/ checked by cron
         content: Periodic health check passed
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
     - name: Deployment failure actor
@@ -38,7 +38,7 @@ jobs:
       if: ${{ failure() && github.event_name != 'schedule' }}
       with:
         status: Failure
-        description: URL https://full-stack-open-pokedex-3dxz.onrender.com/ checked by ${{ github.actor }}
+        description: URL https://full-stack-open-pokedex-3dxzs.onrender.com/ checked by ${{ github.actor }}
         content: Periodic health check failed
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
     - name: Deployment failure cron
@@ -46,6 +46,6 @@ jobs:
       if: ${{ failure() && github.event_name == 'schedule' }}
       with:
         status: Failure 
-        description: URL https://full-stack-open-pokedex-3dxz.onrender.com/ checked by cron
+        description: URL https://full-stack-open-pokedex-3dxzs.onrender.com/ checked by cron
         content: Periodic health check failed
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
